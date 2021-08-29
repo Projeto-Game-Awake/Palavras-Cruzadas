@@ -1,0 +1,9 @@
+{
+    "words":[
+        {"x":1,"y":2,"direction":1,"word":"ciencia","tip":"metodologia"},
+        {"x":7,"y":0,"direction":0,"word":"filosofia","tip":"de onde eu vim?pra onde eu vou?"},
+        {"x":3,"y":8,"direction":1,"word":"religiao","tip":"religar a Deus"}
+    ], "grid": {
+        "x":12,"y":11
+    }            
+}

@@ -54,15 +54,19 @@ class LetterBox extends Phaser.GameObjects.Container {
         this.inputLetter = key;
         this.text.setText(key);
 
-        if(this.nextLetter.length > 1) {
-            for(let i=0;i<this.nextLetter.length;i++) {
-                if(this.scene.before.directions[0] == this.nextLetter[i].directions[0]) {
-                    this.nextLetter[i].select();
-                    return;
-                }
-            }
+        if(this.scene.isRegister) {
+            this.scene.moveDirection(this.x/30-1,this.y/30-1);
         } else {
-            this.nextLetter[0].select();
+            if(this.nextLetter.length > 1) {
+                for(let i=0;i<this.nextLetter.length;i++) {
+                    if(this.scene.before.directions[0] == this.nextLetter[i].directions[0]) {
+                        this.nextLetter[i].select();
+                        return;
+                    }
+                }
+            } else {
+                this.nextLetter[0].select();
+            }
         }
     }
 

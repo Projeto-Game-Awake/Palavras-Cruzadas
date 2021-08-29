@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="form-group">
+                    <h1>Palavras Cruzadas</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Palavra</label>
+                    <input type="text" id="word" class="form-control" value="" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Dica</label>
+                    <textarea id="tip" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button name="addButton" class="btn btn-primary">Adicionar</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button name="saveButton" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            let items = [];
+            function add() {
+                items.push({
+                    word:document.getElementById("word").value,
+                    tip:document.getElementById("tip").innerHTML
+                });
+            }
+        </script>
+    </body>
+</html>

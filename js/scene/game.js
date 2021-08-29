@@ -7,7 +7,7 @@ class Game extends Phaser.Scene
 
     preload ()
     {
-        this.load.html('start', 'html/start.html');
+        this.load.html('start', '/html/start.html');
     }
 
     create ()
@@ -31,16 +31,8 @@ class Game extends Phaser.Scene
             }
         });
 
-        this.scene.start('main', {
-                words:[
-                    {x:1,y:2,direction:1,word:"ciencia",tip:"metodologia"},
-                    {x:7,y:0,direction:0,word:"filosofia",tip:"de onde eu vim?pra onde eu vou?"},
-                    {x:3,y:8,direction:1,word:"religiao",tip:"religar a Deus"},
-                ], grid: {
-                    x:12,y:11
-                }            
-            }
-            );
+        this.scene.start('main');
+
 
         this.tweens.add({
             targets: element,
@@ -56,13 +48,14 @@ const config = {
     backgroundColor: '#125555',
     scale: {
         autoCenter: Phaser.Scale.CENTER_BOTH,
+        parent:"game",
         width: 800,
         height: 600
     },
     dom: {
         createContainer: true
     },
-    scene: [Game, Main]
+    scene: [Game, Main, Register]
 };
 
 const options = {
@@ -75,4 +68,5 @@ const options = {
 
 let game = new Phaser.Game(config);
 
-let tutorial = 0;
+let url = new URL(window.location.href);
+const jogo = url.searchParams.get("jogo");

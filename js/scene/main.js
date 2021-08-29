@@ -26,11 +26,21 @@ class Main extends Phaser.Scene
 
     preload ()
     {
-        this.load.html('start', 'html/start.html');
+        this.load.html('start', '/html/start.html');
+        this.load.json('jogo', "data/" + jogo + ".json"); 
     }
 
     create ()
     {
+        try {
+            let json = this.cache.json.get("jogo");
+            this.words = json.words;
+            this.grid = json.grid;
+        } catch {
+            alert("Jogo "+jogo+" inválido!");
+            return;
+        }
+
         let keyBoardLines = [];
         keyBoardLines.push("QWERTYUIOP".split(""));
         keyBoardLines.push("ASDFGHJKLÇ".split(""));
