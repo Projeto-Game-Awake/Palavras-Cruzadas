@@ -73,52 +73,61 @@ class Main extends Phaser.Scene
         }
 
         let beforeLetter = null;
-        
+        let visibles = 0;
+        let first = null;
+
         for(let i=0;i<this.words.length;i++) {
             let letters = this.words[i].word.toUpperCase().split("");
             let x = this.words[i].x;
             let y = this.words[i].y;
             let directionMove = Main.directionMove[this.words[i].direction];
+            let isVisible = this.words[i].isVisible;
 
-            let letterBox = new LetterBox(this,
-                30+x*30,
-                30+y*30,
-                null,
-                i+1,
-                this.words[i].tip);
+            if(isVisible) {
+                visibles++;
+            } else {
+                let letterBox = new LetterBox(this,
+                    30+x*30,
+                    30+y*30,
+                    null,
+                    i+1-visibles,
+                    this.words[i].tip);
 
-            x+=directionMove.x;
-            y+=directionMove.y;
-    
+                x+=directionMove.x;
+                y+=directionMove.y;
+            }
             for(let j=0;j<letters.length;j++) {
-                let letterBox = this.collection[x][y];
+                let letterBox = this.collection[y][x];
                 if(letterBox == null) {
                     letterBox = new LetterBox(this,
                         30+x*30,
                         30+y*30,
                         this.words[i].direction,
-                        letters[j]);
-                    if(this.selected == null) {
+                        letters[j],"",
+                        isVisible);
+                    if(this.selected == null && isVisible !== true) {
                         this.selected = letterBox;
                     }
-                    this.collection[x][y] = letterBox;
+                    this.collection[y][x] = letterBox;
                 } else {
-                    this.collection[x][y].directions.push(this.words[i].direction);
+                    this.collection[y][x].directions.push(this.words[i].direction);
                 }
-                if(beforeLetter != null) {
-                    beforeLetter.nextLetter.push(letterBox);
+                if(first == null && !letterBox.isVisible) {
+                    first = letterBox;
                 }
-                beforeLetter = letterBox;
+
+                if(isVisible !== true) {
+                    if(beforeLetter != null) {
+                        beforeLetter.nextLetter.push(letterBox);
+                    }
+                    beforeLetter = letterBox;   
+                }
                 x+=directionMove.x;
                 y+=directionMove.y;
             }
         }
 
-        let directionMove = Main.directionMove[this.words[0].direction];
-
-        beforeLetter.nextLetter.push(this.collection
-            [this.words[0].x + directionMove.x]
-            [this.words[0].y + directionMove.y]);
+        beforeLetter.nextLetter.push(first);
 
         this.selected.select();
 
@@ -153,28 +162,41 @@ class Main extends Phaser.Scene
         }
     }
 
-    showMessage() {
+    showMessage(isTip) {
         let back = this.add.rectangle(0,0,800,600,0x000000);
         back.alpha = 0.6;
         back.setOrigin(0);
   
-        const text = this.add.text(400, 300, this.message, { fontFamily: "Arial Black", fontSize: 82 });
-        text.setOrigin(0.5);
-  
-        text.setStroke('#000000', 4);
-        //  Apply the gradient fill.
-        const gradient = text.context.createLinearGradient(0, 0, 0, text.height);
-  
-        if(this.hasWon) {
-          gradient.addColorStop(0, '#111111');
-          gradient.addColorStop(.5, '#00ff00');
-          gradient.addColorStop(.5, '#11aa11');
-          gradient.addColorStop(1, '#111111');
+        let text;
+        if(isTip) {
+            text = this.add.text(400, 300, this.message, { 
+                backgroundColor: '#68b5e9',
+                fontFamily: "Arial Black",
+                fontSize: 43 , 
+                wordWrap: { width: 780, useAdvancedWrap: true }
+            });
+            text.setOrigin(0.5);
+            text.setPadding(64, 16);
         } else {
-          gradient.addColorStop(0, '#111111');
-          gradient.addColorStop(.5, '#ffffff');
-          gradient.addColorStop(.5, '#aaaaaa');
-          gradient.addColorStop(1, '#111111');
+            text = this.add.text(400, 300, this.message, { fontFamily: "Arial Black", fontSize: 82 });
+            text.setOrigin(0.5);
+      
+            text.setStroke('#000000', 4);
+            //  Apply the gradient fill.
+            const gradient = text.context.createLinearGradient(0, 0, 0, text.height);
+      
+            if(this.hasWon) {
+              gradient.addColorStop(0, '#111111');
+              gradient.addColorStop(.5, '#00ff00');
+              gradient.addColorStop(.5, '#11aa11');
+              gradient.addColorStop(1, '#111111');
+            } else {
+              gradient.addColorStop(0, '#111111');
+              gradient.addColorStop(.5, '#ffffff');
+              gradient.addColorStop(.5, '#aaaaaa');
+              gradient.addColorStop(1, '#111111');
+            }
+            text.setFill(gradient);
         }
   
         back.setInteractive();
@@ -184,7 +206,6 @@ class Main extends Phaser.Scene
                 text.destroy();
                 back.destroy();
             });
-        text.setFill(gradient);
       }
 
 }

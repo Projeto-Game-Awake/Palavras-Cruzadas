@@ -1,0 +1,15 @@
+{
+    "words":[
+        {"x":5,"y":0,"direction":0,"word":"allan kardec","isVisible":true},
+        {"x":1,"y":1,"direction":1,"word":"amelie","tip":"Primeiro nome da esposa de Allan Kardec."},
+        {"x":4,"y":2,"direction":1,"word":"lyon","tip":"Cidade onde nasceu Allan Kardec."},
+        {"x":3,"y":3,"direction":1,"word":"paris","tip":"Cidade onde desencarnou Allan Kardec."},
+        {"x":2,"y":4,"direction":1,"word":"genese","tip":"Livro lançado por Kardec em 1868."},
+        {"x":2,"y":7,"direction":1,"word":"frança","tip":"Páis onde nasceu Kardec."},
+        {"x":4,"y":8,"direction":1,"word":"rivail","tip":"Verdadeiro nome de Kardec."},
+        {"x":2,"y":9,"direction":1,"word":"mediunidade","tip":"Fênomeno ou faculdade estudada por Kardec."},
+        {"x":3,"y":10,"direction":1,"word":"mesa","tip":"Objetos que chamou atenção de Kardec nos fenômenos que estudou."}
+    ], "grid": {
+        "x":12,"y":14
+    }            
+}

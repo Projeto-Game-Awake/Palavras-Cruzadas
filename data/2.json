@@ -1,0 +1,18 @@
+{
+    "words":[
+        {"x":10,"y":0,"direction":0,"word":"espiritismo","isVisible":true},
+        {"x":9,"y":0,"direction":1,"word":"espiritos","tip":"Seres inteligentes do universo."},
+        {"x":6,"y":1,"direction":1,"word":"deus","tip":"Inteligência suprema e causa primária de todas as coisas."},
+        {"x":9,"y":2,"direction":1,"word":"perfeiçao","tip":"Característica alcançada por todos os espíritos após várias encarnações."},
+        {"x":3,"y":3,"direction":1,"word":"perispirito","tip":"Característica da alma, que sobrevive ao corpo."},
+        {"x":9,"y":4,"direction":1,"word":"reencarnaçao","tip":"O mesmo que renascimento."},
+        {"x":8,"y":5,"direction":1,"word":"ciencia","tip":"Aspecto do espiritismo que estuda os fenômenos mediúnicos e as relações que se pode estabelecer com os espíritos."},
+        {"x":5,"y":6,"direction":1,"word":"cristianismo","tip":"Doutrina ensinada por Jesus."},
+        {"x":8,"y":7,"direction":1,"word":"filosofia","tip":"Aspecto do espiritismo que revela o que somos,de onde viemos, para onde vamos."},
+        {"x":5,"y":8,"direction":1,"word":"jesus","tip":"O espírito mais perfeito que Deus enviou à Terra para nos servir de exemplo e modelo."},
+        {"x":9,"y":9,"direction":1,"word":"mediunidade","tip":"Faculdade que todas as pessoas possuem, em maior ou menor grau, de sentirem a influência dos espíritos."},
+        {"x":1,"y":10,"direction":1,"word":"evangelho","tip":"Conjunto dos ensinamentos de Jesus."}
+    ], "grid": {
+        "x":22,"y":11
+    }            
+}
