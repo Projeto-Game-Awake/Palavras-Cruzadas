@@ -113,9 +113,7 @@ class Register extends Phaser.Scene
                         word.word = this.items[i].word;
                         word.tip = this.items[i].tip;
                         word.direction = direction;
-                        console.log(word);
                         if(!this.inside(word)) {
-                            console.log(this.words);
                             this.words.push(word);
                             hasFound = true;
                             break;

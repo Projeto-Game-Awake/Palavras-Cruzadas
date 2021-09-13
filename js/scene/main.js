@@ -41,18 +41,7 @@ class Main extends Phaser.Scene
             return;
         }
 
-        let keyBoardLines = [];
-        keyBoardLines.push("QWERTYUIOP".split(""));
-        keyBoardLines.push("ASDFGHJKLÇ".split(""));
-        keyBoardLines.push("ZXCVBNM".split(""));
-
-        let startX = 60;
-        for(let i=0;i<keyBoardLines.length;i++) {
-            for(let j=0;j<keyBoardLines[i].length;j++) {
-                new KeyBox(this, startX+60*j,420+60*i,keyBoardLines[i][j]);
-            }
-            startX += 10;
-        }
+        this.keyBoard = new KeyBoard(this);
 
         let keysList = "ABCDEFGHIJKLMNOPQRSTUVXWYZÇ".split("");
         for(let i=0;i<keysList.length;i++) {
@@ -97,7 +86,7 @@ class Main extends Phaser.Scene
                 y+=directionMove.y;
             }
             for(let j=0;j<letters.length;j++) {
-                let letterBox = this.collection[y][x];
+                let letterBox = this.collection[x][y];
                 if(letterBox == null) {
                     letterBox = new LetterBox(this,
                         30+x*30,
@@ -108,9 +97,9 @@ class Main extends Phaser.Scene
                     if(this.selected == null && isVisible !== true) {
                         this.selected = letterBox;
                     }
-                    this.collection[y][x] = letterBox;
+                    this.collection[x][y] = letterBox;
                 } else {
-                    this.collection[y][x].directions.push(this.words[i].direction);
+                    this.collection[x][y].directions.push(this.words[i].direction);
                 }
                 if(first == null && !letterBox.isVisible) {
                     first = letterBox;

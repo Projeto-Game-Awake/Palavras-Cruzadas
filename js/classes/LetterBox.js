@@ -42,6 +42,7 @@ class LetterBox extends Phaser.GameObjects.Container {
         this.tip = tip;
 
         this.nextLetter = [];
+        this.currentMove = 0;
         scene.add.existing(this);
     }
 
@@ -54,12 +55,13 @@ class LetterBox extends Phaser.GameObjects.Container {
         }
         this.box.setStrokeStyle(4, 0xcccccc);
         this.scene.before = this.scene.selected;
-        this.scene.children.bringToTop(this);
+        if(this.scene.keyBoard.alpha == 1) {
+            this.scene.children.bringToTop(this);
+        }
         this.scene.selected = this;
     }
 
     setText(key) {
-
         if(!this.isVisible) {
             this.inputLetter = key;
             this.text.setText(key);
@@ -68,24 +70,21 @@ class LetterBox extends Phaser.GameObjects.Container {
         if(this.scene.isRegister) {
             this.scene.moveDirection(this.x/30-1,this.y/30-1);
         } else {
-            if(this.nextLetter.length > 1) {
-                for(let i=0;i<this.nextLetter.length;i++) {
-                    for(let d=0;d<this.scene.before.directions.length;d++) {
-                        for(let d2=0;d2<this.nextLetter[i].directions.length;d2++) {
-                            if(this.scene.before.directions[d] == this.nextLetter[i].directions[d2]) {
-                                this.nextLetter[i].select();
-                                return;
-                            }
-                        }
+            let next = this.nextLetter[this.currentMove];
+            if(next.inputLetter != "") { 
+                if(next.isVisible || next.nextLetter[next.currentMove].inputLetter == "") {
+                    let next = this.nextLetter[this.currentMove];
+                    next.setText(next.inputLetter);
+                } else {
+                    this.nextLetter[this.currentMove].select();
+                    if(this.nextLetter.length > 1) {
+                        this.currentMove = ++this.currentMove % 2;
                     }
                 }
             } else {
-                if(this.nextLetter[0].isVisible) {
-                    for(let i=0;i<this.nextLetter.length;i++) {
-                        this.nextLetter[i].setText(key);
-                    }
-                } else {
-                    this.nextLetter[0].select();
+                this.nextLetter[this.currentMove].select();
+                if(this.nextLetter.length > 1) {
+                    this.currentMove = ++this.currentMove % 2;
                 }
             }
         }

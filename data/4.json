@@ -1,0 +1,16 @@
+{
+    "words":[
+        {"x":5,"y":4,"direction":0,"word":"onisciente","isVisible":true},
+        {"x":2,"y":6,"direction":1,"word":"onipresente","tip":""},
+        {"x":12,"y":0,"direction":0,"word":"onipotente","tip":""},
+        {"x":7,"y":2,"direction":1,"word":"eterno","tip":""},
+        {"x":1,"y":12,"direction":1,"word":"imaterial","tip":""},
+        {"x":8,"y":9,"direction":1,"word":"imutavel","tip":""},
+        {"x":7,"y":10,"direction":1,"word":"perfeito","tip":""},
+        {"x":9,"y":3,"direction":0,"word":"justo","tip":""},
+        {"x":7,"y":8,"direction":1,"word":"bom","tip":""},
+        {"x":3,"y":11,"direction":1,"word":"unico","tip":""}
+    ], "grid": {
+        "x":17,"y":15
+    }            
+}
