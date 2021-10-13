@@ -1,7 +1,12 @@
 class KeyBoard extends Phaser.GameObjects.Container {
 
     constructor(scene) {
-        let rectangle = scene.add.rectangle(-40,-40,630,300, 0xcccccc);
+        let x = -40;
+        let y = -40;
+        if(isMobile()) {
+            y -= 300;
+        }
+        let rectangle = scene.add.rectangle(x,y,630,300, 0xcccccc);
         rectangle.setOrigin(0);
         let items = [rectangle];
 
@@ -13,25 +18,12 @@ class KeyBoard extends Phaser.GameObjects.Container {
         let startX = 0;
         for(let i=0;i<keyBoardLines.length;i++) {
             for(let j=0;j<keyBoardLines[i].length;j++) {
-                let key = new KeyBox(scene, startX+60*j,60*i,keyBoardLines[i][j]);
+                let key = new KeyBox(scene, x+40+startX+60*j,y+40+60*i,keyBoardLines[i][j]);
                 items.push(key);
             }
             startX += 10;
         }
         super(scene,60,420, items);
-
-        rectangle.setInteractive();
-        rectangle.on(
-            "pointerdown",
-            () => {
-                if(this.alpha == 0.5) {
-                    this.alpha = 1;
-                    scene.children.sendToBack(this);                    
-                } else {
-                    this.alpha = 0.5;
-                    scene.children.bringToTop(this);                    
-                }
-        },this);
 
         scene.add.existing(this);
     }

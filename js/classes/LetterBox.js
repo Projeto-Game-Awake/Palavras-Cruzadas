@@ -36,6 +36,8 @@ class LetterBox extends Phaser.GameObjects.Container {
         this.letter = letter;
         this.isVisible = isVisible === true ? true : false;
         this.inputLetter = this.isVisible ? letter : "";
+        this.hasFound = false;
+
         if(this.inputLetter != "") {
             this.text.setText(this.inputLetter);
         }
@@ -51,16 +53,58 @@ class LetterBox extends Phaser.GameObjects.Container {
             return;
         }
         if(this.scene.selected) {
-            this.scene.selected.box.setStrokeStyle(4, 0x000000);
+            if(this.hasFound) {
+                this.scene.selected.box.setStrokeStyle(4, 0x0000ff);
+            } else {
+                this.scene.selected.box.setStrokeStyle(4, 0x000000);
+            }
         }
-        this.box.setStrokeStyle(4, 0xcccccc);
-        this.scene.before = this.scene.selected;
-        if(this.scene.keyBoard.alpha == 1) {
-            this.scene.children.bringToTop(this);
+        if(!this.hasFound) {
+            this.box.setStrokeStyle(4, 0xcccccc);
+            this.scene.before = this.scene.selected;
+            if(this.scene.keyBoard.alpha == 1) {
+                this.scene.children.bringToTop(this);
+            }
+            this.scene.selected = this;
         }
-        this.scene.selected = this;
     }
-
+    checkWord() {
+        let word = "";
+        let wordInput = "";        
+        let list = [];
+        if(this.minX != this.maxX) {
+            for(let i=this.minX;i<=this.maxX;i++) {
+                let item = this.scene.collection[i][this.minY];
+                if(item.letter == "Ç") {
+                    word += "C";
+                } else {
+                    word += item.letter;
+                }
+                wordInput += item.inputLetter;                
+                list.push(item);
+            }
+        } else {
+            for(let i=this.minY;i<=this.maxY;i++) {
+                let item = this.scene.collection[this.minX][i];
+                if(item.letter == "Ç") {
+                    word += "C";
+                } else {
+                    word += item.letter;
+                }
+                wordInput += item.inputLetter;              
+                list.push(item);
+            }
+        }
+        if(word == wordInput) {
+            for(let i=0;i<list.length;i++) {
+                list[i].setFound();
+            }
+        }
+    }
+    setFound() {
+        this.box.setStrokeStyle(4, 0x0000ff);
+        this.hasFound = true;
+    }
     setText(key) {
         if(!this.isVisible) {
             this.inputLetter = key;
@@ -88,8 +132,9 @@ class LetterBox extends Phaser.GameObjects.Container {
                 }
             }
         }
-    }
 
+        this.checkWord();
+    }
     isMatch() {
         return this.inputLetter == this.letter || (this.inputLetter == "C" && this.letter == "Ç")
     }

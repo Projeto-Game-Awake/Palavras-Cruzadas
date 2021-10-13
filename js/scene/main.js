@@ -66,9 +66,10 @@ class Main extends Phaser.Scene
         let first = null;
 
         for(let i=0;i<this.words.length;i++) {
-            let letters = this.words[i].word.toUpperCase().split("");
-            let x = this.words[i].x;
-            let y = this.words[i].y;
+            let word = this.words[i];
+            let letters = word.word.toUpperCase().split("");
+            let x = word.x;
+            let y = word.y;
             let directionMove = Main.directionMove[this.words[i].direction];
             let isVisible = this.words[i].isVisible;
 
@@ -85,6 +86,11 @@ class Main extends Phaser.Scene
                 x+=directionMove.x;
                 y+=directionMove.y;
             }
+            let list = [];
+            let minX = x;
+            let minY = y;
+            let maxX = x;
+            let maxY = y;
             for(let j=0;j<letters.length;j++) {
                 let letterBox = this.collection[x][y];
                 if(letterBox == null) {
@@ -101,6 +107,7 @@ class Main extends Phaser.Scene
                 } else {
                     this.collection[x][y].directions.push(this.words[i].direction);
                 }
+                list.push(letterBox);
                 if(first == null && !letterBox.isVisible) {
                     first = letterBox;
                 }
@@ -111,8 +118,16 @@ class Main extends Phaser.Scene
                     }
                     beforeLetter = letterBox;   
                 }
+                maxX = Math.max(maxX,x);
+                maxY = Math.max(maxY,y);
                 x+=directionMove.x;
                 y+=directionMove.y;
+            }
+            for(let j=0;j<list.length;j++) {
+                list[j].minX = minX;
+                list[j].minY = minY;
+                list[j].maxX = maxX;
+                list[j].maxY = maxY;
             }
         }
 
@@ -120,13 +135,19 @@ class Main extends Phaser.Scene
 
         this.selected.select();
 
-        let button = this.add.rectangle(720,520,120,120, 0x0000ff);
+        let button = this.add.rectangle(750,60,80,80, 0x0000ff);
         button.setStrokeStyle(4, 0xdddddd);
         button.setInteractive();
         button.on(
         "pointerdown",
         () => {
-            this.hasWon = true;
+            if(this.keyBoard.alpha == 0) {
+                this.keyBoard.alpha = 0.5;
+                this.children.bringToTop(this.keyBoard);
+            } else {
+                this.keyBoard.alpha = 0;
+            }
+            /*this.hasWon = true;
             for(let i=0;i<this.collection.length;i++) {
                 for(let j=0;j<this.collection[i].length;j++) {
                     if(this.collection[i][j] != null && !this.collection[i][j].isMatch()) {
@@ -139,13 +160,13 @@ class Main extends Phaser.Scene
             } else {
                 this.message = "Tente novamente";
             }
-            this.showMessage();
+            this.showMessage();*/
         });
     }
 
     keyPress(key) {
         return function() {
-            if(this.selected) {
+            if(this.selected && !this.selected.hasFound) {
                 this.selected.setText(key);
             }
         }

@@ -70,3 +70,53 @@ let game = new Phaser.Game(config);
 
 let url = new URL(window.location.href);
 const jogo = url.searchParams.get("jogo");
+
+function checkUserAgent(name)
+{
+	if (navigator.userAgent.indexOf(name) != -1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function isMobile ()
+{
+	'use strict';
+	
+	let device = false;
+	
+	function checkUserAgent (name)
+	{
+		if (navigator.userAgent.indexOf(name) != -1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	if (checkUserAgent('Android'))
+	{
+		device	= true;
+	}
+	else if (checkUserAgent('iPhone') && !window.MSStream)
+	{
+		device	= true;
+	}
+	else if (checkUserAgent('Mac OS') || checkUserAgent('Macintosh'))
+	{
+		device = false;
+	}
+	else if (checkUserAgent('Windows'))
+	{
+		device = false;
+	}
+
+	return device;
+}
