@@ -72,7 +72,7 @@ class LetterBox extends Phaser.GameObjects.Container {
     }
     setColorBox(box) {
         if(this.isVisible) {
-            box.setStrokeStyle(2, 0x0000ff);
+            box.setStrokeStyle(4, 0x0000ff);
         } else {
             box.setStrokeStyle(2, 0x000000);
         }
