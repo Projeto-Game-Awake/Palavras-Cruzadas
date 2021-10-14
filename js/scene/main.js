@@ -65,6 +65,8 @@ class Main extends Phaser.Scene
         let visibles = 0;
         let first = null;
 
+        let boxSize = 32;
+
         for(let i=0;i<this.words.length;i++) {
             let word = this.words[i];
             let letters = word.word.toUpperCase().split("");
@@ -77,11 +79,13 @@ class Main extends Phaser.Scene
                 visibles++;
             } else {
                 let letterBox = new LetterBox(this,
-                    30+x*30,
-                    30+y*30,
+                    boxSize+x*boxSize,
+                    boxSize+y*boxSize,
                     null,
                     i+1-visibles,
                     this.words[i].tip);
+
+                this.collection[x][y] = letterBox;
 
                 x+=directionMove.x;
                 y+=directionMove.y;
@@ -95,8 +99,8 @@ class Main extends Phaser.Scene
                 let letterBox = this.collection[x][y];
                 if(letterBox == null) {
                     letterBox = new LetterBox(this,
-                        30+x*30,
-                        30+y*30,
+                        boxSize+x*boxSize,
+                        boxSize+y*boxSize,
                         this.words[i].direction,
                         letters[j],"",
                         isVisible);
@@ -124,10 +128,12 @@ class Main extends Phaser.Scene
                 y+=directionMove.y;
             }
             for(let j=0;j<list.length;j++) {
-                list[j].minX = minX;
-                list[j].minY = minY;
-                list[j].maxX = maxX;
-                list[j].maxY = maxY;
+                let item = {};
+                item.minX = minX;
+                item.minY = minY;
+                item.maxX = maxX;
+                item.maxY = maxY;
+                list[j].indexes.push(item);
             }
         }
 
@@ -166,7 +172,7 @@ class Main extends Phaser.Scene
 
     keyPress(key) {
         return function() {
-            if(this.selected && !this.selected.hasFound) {
+            if(this.selected && !this.selected.isVisible) {
                 this.selected.setText(key);
             }
         }
